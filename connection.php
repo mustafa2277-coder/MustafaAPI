@@ -15,5 +15,5 @@ if ($conn->connect_error) {
 echo "Connected successfully";
 echo "<br>";
 
-
+echo "Hello To Github.";
 ?>
