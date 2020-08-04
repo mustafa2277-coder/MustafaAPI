@@ -2,15 +2,34 @@
 
 include('connection.php');
 
-$phone=$_POST['user_id'];
-$token=$_POST['token'];
+//$data = json_decode(file_get_contents('php://input'), true);
+
+$phone='';
+$token='';
+if(isset($_POST['user_id']) && isset($_POST['token']))
+{
+  
+  $phone=$_POST['user_id'];
+  $token=$_POST['token'];
+}
+
+
+
+//echo $data['user_id'] . " " . $data['token'];
+
+//$phone=$data['user_id'];
+//$token=$data['token'];
 
 //echo $phone . " " . $token;
 
-$sql = "SELECT * FROM myapi where phone='$phone'";
-$result = $conn->query($sql);
-$id=0;
 
+
+if($phone!='' && $token!='')
+{
+
+  $sql = "SELECT * FROM myapi where phone='$phone'";
+  $result = $conn->query($sql);
+  
 
 if ($result->num_rows > 0) 
 {
@@ -82,67 +101,12 @@ else
 
 }
 
+}
 
-//foreach($result as $index=>$record)
-//{
-
-  /*
-    if($phone==$record['phone'])
-      {
-        $sql = "UPDATE myapi SET token='$token' WHERE phone='$phone'";
-        $conn->query($sql);
-        echo "Record Updated!";
-      }
-
-    else if($phone!=$record['phone'])
-      {
-        $sql = "INSERT INTO myapi (token, phone)
-        VALUES ('$token', '$phone')";
-        $conn->query($sql);
-
-        echo "Record Inserted!";
-      }
-
-    */
-//}
-
-
-/*
-    if(mysqli_num_rows($result)==null)
-      {
-    
-        $sql = "INSERT INTO myapi (token, phone)
-        VALUES ('abc123', '03029387238')";
-
-        if ($conn->query($sql) === TRUE) 
-        {
-          echo "New record created successfully";
-        } 
-        else 
-        {
-          echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        echo "You are in insert function!";
-      }
-
-    else
-      {
-          echo "You are in update function!";
-
-
-          $sql = "UPDATE myapi SET token='New Token' WHERE id=$id";
-
-            if ($conn->query($sql) === TRUE) 
-            {
-              echo "Record updated successfully";
-            } 
-            else 
-            {
-              echo "Error updating record: " . $conn->error;
-            }
-      }
-*/
+else
+{
+  echo json_encode(['code'=>'500','status'=>'failed','message'=>'Please insert required field.','data'=>null]);
+}
 
 
 

@@ -2,7 +2,17 @@
 
 include('connection.php');
 
-$phone = $_GET['user_id'];
+$phone='';
+if(isset($_GET['user_id']))
+{
+  $phone=$_GET['user_id'];
+}
+
+
+
+
+if($phone!='')
+{
 
 $sql="SELECT * from myapi where phone='$phone'";
 
@@ -36,11 +46,17 @@ if($conn->query($sql)==true)
 
 else 
   {
-    echo json_encode(['code'=>'500','status'=>'failed','message'=>'Error Finding Record','data'=>[]]);
+    echo json_encode(['code'=>'500','status'=>'failed','message'=>'Error Finding Record','data'=>null]);
   }
 
+}
 
 
+else
+{
+  echo json_encode(['code'=>'500','status'=>'failed','message'=>'Please insert required fields.','data'=>null]);
+
+}
 
 
 ?>
